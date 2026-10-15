@@ -1,0 +1,21 @@
+{
+  "domElement": "<body-protection></body-protection>",
+  "name": "Body Protection | حماية البدي",
+  "types": [
+    "ui.apps.categories.vehicle_control",
+    "ui.apps.categories.utility"
+  ],
+  "description": "منع انعفاط أو تكسر جسم السيارة مهما صدمت مع استثناء الصدامات الأمامية والخلفية فقط",
+  "css": {
+    "width": "230px",
+    "height": "130px",
+    "min-width": "180px",
+    "min-height": "110px"
+  },
+  "author": "Antigravity",
+  "version": "2.0",
+  "directive": "bodyProtection",
+  "category": "Vehicle Control",
+  "isAuxiliary": false,
+  "interactive": "yes"
+}

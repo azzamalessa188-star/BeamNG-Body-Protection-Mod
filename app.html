@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>درع البدي | Body Protection</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: rgba(14, 18, 24, 0.95);
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 16px;
+      user-select: none;
+      overflow: hidden;
+      width: 260px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 8px;
+    }
+    .title {
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 12px;
+      transition: all 0.3s;
+    }
+    .badge.on {
+      background: rgba(0, 230, 118, 0.2);
+      color: #00e676;
+      border: 1px solid #00e676;
+    }
+    .badge.off {
+      background: rgba(255, 23, 68, 0.2);
+      color: #ff5252;
+      border: 1px solid #ff5252;
+    }
+    .subtitle {
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+      margin: 10px 0;
+      line-height: 1.4;
+    }
+    .buttons {
+      display: flex;
+      gap: 12px;
+      height: 48px;
+    }
+    button {
+      flex: 1;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.08);
+      color: #777;
+    }
+    button.active-on {
+      background: linear-gradient(135deg, #00c853, #00e676);
+      color: #000;
+      box-shadow: 0 0 16px rgba(0, 230, 118, 0.6);
+      transform: scale(1.03);
+    }
+    button.active-off {
+      background: linear-gradient(135deg, #d50000, #ff1744);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(255, 23, 68, 0.6);
+      transform: scale(1.03);
+    }
+    .hotkey-hint {
+      margin-top: 10px;
+      font-size: 10px;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">🛡️ حماية البدي</div>
+    <div id="badge" class="badge off">معطل OFF</div>
+  </div>
+
+  <div id="desc" class="subtitle">
+    الفيزياء الافتراضية نشطة
+  </div>
+
+  <div class="buttons">
+    <button id="btnOn" onclick="toggle(true)">✓ ON</button>
+    <button id="btnOff" class="active-off" onclick="toggle(false)">✕ OFF</button>
+  </div>
+
+  <div class="hotkey-hint">
+    اختصار الكيبورد: <b>Shift + I</b> أو من القائمة الدائرية
+  </div>
+
+  <script>
+    let isEnabled = false;
+
+    function updateUI(state) {
+      isEnabled = state;
+      const badge = document.getElementById('badge');
+      const desc = document.getElementById('desc');
+      const btnOn = document.getElementById('btnOn');
+      const btnOff = document.getElementById('btnOff');
+
+      if (isEnabled) {
+        badge.className = 'badge on';
+        badge.innerText = 'مفعل ON';
+        desc.innerText = 'جسم السيارة محمي تماماً • الصدامات تتأثر فقط';
+        btnOn.className = 'active-on';
+        btnOff.className = '';
+      } else {
+        badge.className = 'badge off';
+        badge.innerText = 'معطل OFF';
+        desc.innerText = 'الفيزياء الافتراضية نشطة • كل القطع تتأثر';
+        btnOn.className = '';
+        btnOff.className = 'active-off';
+      }
+    }
+
+    function toggle(state) {
+      if (window.bngApi) {
+        bngApi.engineLua('if extensions.bodyProtection then extensions.bodyProtection.setInvincibility(' + (state ? 'true' : 'false') + ') end');
+      }
+      updateUI(state);
+    }
+
+    if (window.bngApi) {
+      bngApi.addEventListener('BodyProtectionState', function(data) {
+        if (data && typeof data.enabled === 'boolean') {
+          updateUI(data.enabled);
+        }
+      });
+      bngApi.engineLua('if extensions.bodyProtection then extensions.bodyProtection.requestState() end');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "toggle_body_protection": {
+    "cat": "gameplay",
+    "order": 50,
+    "ctx": "tlua",
+    "onDown": "if extensions.bodyProtection then extensions.bodyProtection.toggle() end",
+    "title": "تبديل حماية البدي | Toggle Body Protection",
+    "desc": "تفعيل/تعطيل حماية جسم السيارة من الاصطدام والانعفاط باستثناء الصدامات"
+  }
+}
