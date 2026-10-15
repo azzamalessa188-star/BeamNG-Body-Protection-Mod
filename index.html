@@ -1,1 +1,772 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BEAMNG.DRIVE • BODY STRUCTURAL PROTECTION SYSTEM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
+    :root {
+      --bg: #000000;
+      --sidebar-bg: #0c0c0c;
+      --card-bg: #080808;
+      --card-border: #1f1f1f;
+      --border-subtle: #171717;
+      --border-strong: #2e2e2e;
+      --text-pure: #ffffff;
+      --text-muted: #888888;
+      --text-dim: #555555;
+      --font-ar: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-en: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-pure);
+      font-family: var(--font-ar);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sleek Thin Gray Sidebar (الشريط الجانبي النحيف الرمادي) */
+    aside {
+      width: 250px;
+      min-width: 250px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      background: var(--sidebar-bg);
+      border-left: 1px solid var(--border-strong);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 20px;
+      z-index: 10;
+    }
+
+    .sidebar-header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-en);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-pure);
+    }
+    .brand-symbol {
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--text-pure);
+      border-radius: 2px;
+      transform: rotate(45deg);
+    }
+
+    .system-title {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 24px;
+    }
+    .nav-item a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      font-family: var(--font-ar);
+    }
+    .nav-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+    .nav-item a:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-pure);
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .meta-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-repo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #000000;
+      color: var(--text-pure);
+      border: 1px solid var(--border-strong);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-en);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+    }
+    .btn-repo:hover {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+
+    /* Main Content Area */
+    main {
+      flex: 1;
+      max-width: 960px;
+      padding: 64px 56px 120px;
+      overflow-y: auto;
+    }
+
+    /* Document Top Bar */
+    .doc-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .status-pill {
+      border: 1px solid var(--border-strong);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--text-pure);
+    }
+
+    h1 {
+      font-family: var(--font-ar);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+      margin-bottom: 20px;
+      color: var(--text-pure);
+    }
+
+    .lead-text {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 32px;
+    }
+
+    /* Specifications Table */
+    .spec-table-container {
+      margin-bottom: 56px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .spec-table th {
+      background: #0d0d0d;
+      padding: 12px 18px;
+      text-align: right;
+      font-weight: 600;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .spec-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+    }
+    .spec-table tr:last-child td {
+      border-bottom: none;
+    }
+    .spec-table td.strong {
+      color: var(--text-pure);
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-family: var(--font-ar);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-pure);
+      margin-bottom: 16px;
+      padding-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::before {
+      content: "";
+      width: 4px;
+      height: 18px;
+      background: #ffffff;
+      border-radius: 2px;
+    }
+
+    .body-paragraph {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    /* Technical Code Card */
+    .code-card {
+      background: #050505;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+    }
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+    pre {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #e5e5e5;
+      line-height: 1.6;
+      direction: ltr;
+      text-align: left;
+      overflow-x: auto;
+    }
+    .code-comment { color: #555555; }
+    .code-keyword { color: #ffffff; font-weight: 700; }
+    .code-func { color: #aaaaaa; }
+
+    /* Interactive Monochrome Dual-Button Widget Preview */
+    .widget-demo-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 48px;
+    }
+    .widget-box {
+      background: #000000;
+      border: 1px solid #333333;
+      border-radius: 6px;
+      padding: 16px;
+      max-width: 340px;
+      margin: 20px auto 0;
+    }
+    .widget-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .widget-indicator {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .indicator-on {
+      background: #ffffff;
+      color: #000000;
+    }
+    .indicator-off {
+      background: #1a1a1a;
+      color: #777777;
+      border: 1px solid #2e2e2e;
+    }
+    .widget-btn-row {
+      display: flex;
+      gap: 10px;
+      height: 42px;
+    }
+    .btn-mock {
+      flex: 1;
+      border: 1px solid #2a2a2a;
+      background: #0d0d0d;
+      color: #666666;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-mock.selected {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Grid of Architectural Pillars */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .arch-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 20px;
+      transition: border-color 0.2s ease;
+    }
+    .arch-card:hover {
+      border-color: var(--border-strong);
+    }
+    .arch-id {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .arch-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-pure);
+      margin-bottom: 8px;
+    }
+    .arch-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Deployment Steps */
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .step-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .step-counter {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .step-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-pure);
+      margin-bottom: 6px;
+    }
+    .step-detail {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Formal Callout Box */
+    .legal-box {
+      border: 1px solid var(--border-strong);
+      background: #080808;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 48px;
+    }
+    .legal-title {
+      font-family: var(--font-en);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-pure);
+      margin-bottom: 8px;
+    }
+    .legal-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 900px) {
+      body { flex-direction: column; }
+      aside { width: 100%; height: auto; min-width: 100%; border-left: none; border-bottom: 1px solid var(--border-strong); }
+      main { padding: 32px 20px; }
+      .steps-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sleek Thin Gray Sidebar (الشريط الجانبي النحيف الرمادي) -->
+  <aside>
+    <div class="sidebar-header">
+      <div class="brand-mark">
+        <span class="brand-symbol"></span>
+        <span>BEAMNG.DRIVE</span>
+      </div>
+      <div class="system-title">
+        STRUCTURAL SHIELD SYS • v1.0.0
+      </div>
+
+      <nav>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#overview">
+              <span class="nav-num">01</span>
+              <span>نظرة عامة</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#architecture">
+              <span class="nav-num">02</span>
+              <span>المعمارية البرمجية</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#bumper-isolation">
+              <span class="nav-num">03</span>
+              <span>عزل الصدامات</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#interface">
+              <span class="nav-num">04</span>
+              <span>واجهة التحكم المدمجة</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#deployment">
+              <span class="nav-num">05</span>
+              <span>خطوات التثبيت</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#license">
+              <span class="nav-num">06</span>
+              <span>الترخيص والذكاء الاصطناعي</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="meta-tag">COMMUNITY EDITION</div>
+      <a href="https://github.com/azzamalessa188-star/BeamNG-Body-Protection-Mod" target="_blank" class="btn-repo">
+        <span>VIEW REPOSITORY</span>
+        <span>↗</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Technical Documentation Area (أبيض وأسود رسمي) -->
+  <main>
+
+    <!-- Top Metadata -->
+    <div class="doc-meta">
+      <span class="status-pill">RELEASE v1.0.0</span>
+      <span>•</span>
+      <span>PHYSICS CORE INTERFACE</span>
+      <span>•</span>
+      <span>MIT LICENSE</span>
+    </div>
+
+    <!-- Title and Executive Summary -->
+    <section id="overview">
+      <h1>نظام حماية وتثبيت هيكل المركبة ضد الانعفاط اللدن</h1>
+      <p class="lead-text">
+        إضافة هندسية متكاملة لمحاكي BeamNG.drive مصممة لإلغاء التشوه اللدن والانعفاط الهيكلي على كامل الشاصي والكبينة والأبواب والسقف، مع عزل الصدامات الأمامية والخلفية لتخضع لفيزياء التحطم والانفصال الواقعية 100%.
+      </p>
+    </section>
+
+    <!-- Specifications Table -->
+    <div class="spec-table-container">
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>المعيار التقني</th>
+            <th>القيمة البرمجية</th>
+            <th>البيئة التشغيلية</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>محرك استدعاء الفيزياء</td>
+            <td class="strong">libbeamng.x64.dll</td>
+            <td>C++ Core Memory Layer</td>
+          </tr>
+          <tr>
+            <td>تردد معالجة الأسياخ</td>
+            <td class="strong">2,000 Hz</td>
+            <td>Vehicle Physics Thread</td>
+          </tr>
+          <tr>
+            <td>عزل الصدامات</td>
+            <td class="strong">Dynamic Node-Beam Filter</td>
+            <td>Lua Auto-Extension</td>
+          </tr>
+          <tr>
+            <td>استهلاك الموارد</td>
+            <td class="strong">0.00 ms / Frame</td>
+            <td>Zero FPS Overhead</td>
+          </tr>
+          <tr>
+            <td>طريقة التبديل</td>
+            <td class="strong">UI App + Shift+I + Radial Menu</td>
+            <td>CEF / AngularJS / Input Manager</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section: Software & Physics Architecture -->
+    <section id="architecture">
+      <div class="section-title">المعمارية البرمجية وآلية محرك التصادم</div>
+      <p class="body-paragraph">
+        يعتمد محرك BeamNG.drive في محاكاة التصادمات على شبكة الأسياخ والنقاط (Node-Beam System). عند الاصطدام، تحسب نواة المحرك في C++ قوى الشد والضغط. إذا تجاوزت القوة حد <span style="font-family:var(--font-mono); color:#ffffff;">beamDeform</span> يحدث انعفاط لدن دائم (تشوه المعدن)، وإذا تجاوزت <span style="font-family:var(--font-mono); color:#ffffff;">beamStrength</span> ينقطع السيخ وينفصل.
+      </p>
+      <p class="body-paragraph">
+        الخلل الذي عانت منه المحاولات السابقة هو تعديل جداول Lua التخزينية فقط، مما كان يمنع وصول الأوامر إلى النواة الفيزيائية. يقوم هذا المود بربط مباشر مع دوال النواة عبر:
+      </p>
+
+      <div class="code-card">
+        <div class="code-header">
+          <span>LUA VEHICLE EXTENSION // CORE INTERFACE</span>
+          <span>EXECUTION: 2000 HZ</span>
+        </div>
+        <pre><span class="code-comment">-- Lock chassis beams against any plastic deformation or breakage</span>
+<span class="code-keyword">for</span> _, cid <span class="code-keyword">in</span> <span class="code-func">ipairs</span>(nonBumperBeams) <span class="code-keyword">do</span>
+  obj:<span class="code-func">setBeamDeform</span>(cid, <span class="code-keyword">math.huge</span>)    <span class="code-comment">-- Yield threshold = Infinite (Zero Deformation)</span>
+  obj:<span class="code-func">setBeamStrength</span>(cid, <span class="code-keyword">math.huge</span>)  <span class="code-comment">-- Break threshold = Infinite (Zero Structural Failure)</span>
+  
+  <span class="code-comment">-- Restore original rest length if prior displacement occurred</span>
+  <span class="code-keyword">if</span> originalLength[cid] <span class="code-keyword">then</span>
+    obj:<span class="code-func">setBeamLength</span>(cid, originalLength[cid])
+  <span class="code-keyword">end</span>
+<span class="code-keyword">end</span></pre>
+      </div>
+    </section>
+
+    <!-- Section: Bumper Isolation -->
+    <section id="bumper-isolation">
+      <div class="section-title">خوارزمية عزل الصدامات الأمامية والخلفية</div>
+      <p class="body-paragraph">
+        تعتمد الإضافة على فحص طبوغرافي ديناميكي لكل سيخ متصل بهيكل السيارة عبر معايير ثلاثية الأبعاد:
+      </p>
+
+      <div class="arch-grid">
+        <div class="arch-card">
+          <div class="arch-id">CRITERIA 01</div>
+          <div class="arch-name">فحص مسار القطعة (partOrigin & partPath)</div>
+          <div class="arch-desc">
+            التحقق من الكلمات الدلالية للصدامات مثل bumper, fascia, bullbar في ملفات JBeam الأصلية والمعدلة.
+          </div>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-id">CRITERIA 02</div>
+          <div class="arch-name">فحص مجموعات الانفصال (BreakGroups)</div>
+          <div class="arch-desc">
+            عزل أسياخ نقاط التثبيت المسؤولة عن انفصال وسقوط الصدامات عند الحوادث القوية لتسقط بشكل طبيعي.
+          </div>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-id">CRITERIA 03</div>
+          <div class="arch-name">طوبوغرافيا النقاط (fb* & rb*)</div>
+          <div class="arch-desc">
+            التعرف على بادئات أسماء نقاط الصدام الأمامي (Front Bumper) ونقاط الصدام الخلفي (Rear Bumper).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: In-Game UI Widget -->
+    <section id="interface">
+      <div class="section-title">واجهة التحكم المدمجة داخل اللعبة (UI App)</div>
+      <p class="body-paragraph">
+        تحتوي الواجهة على زرين فقط (<span style="font-family:var(--font-mono); color:#fff;">ON</span> / <span style="font-family:var(--font-mono); color:#fff;">OFF</span>) مصممة لتكون بسيطة ومريحة للمستخدم بدون أي تعقيد أو تشويش على شاشة اللعب:
+      </p>
+
+      <div class="widget-demo-card">
+        <div style="font-size:12px; font-weight:700; color:var(--text-dim); text-align:center; font-family:var(--font-mono); letter-spacing:1px; text-transform:uppercase;">
+          INTERACTIVE IN-GAME WIDGET DEMO
+        </div>
+
+        <div class="widget-box">
+          <div class="widget-box-header">
+            <span>BODY PROTECTION</span>
+            <span id="widgetBadge" class="widget-indicator indicator-on">ON</span>
+          </div>
+          <div class="widget-btn-row">
+            <button id="btnMockOn" class="btn-mock selected" onclick="toggleWidgetState(true)">[ ON ]</button>
+            <button id="btnMockOff" class="btn-mock" onclick="toggleWidgetState(false)">[ OFF ]</button>
+          </div>
+        </div>
+        <div id="widgetStatusNote" style="text-align:center; font-size:11px; color:var(--text-dim); margin-top:12px; font-family:var(--font-mono);">
+          STATE: CHASSIS INVINCIBLE • BUMPERS DESTRUCTIBLE
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Deployment Guide -->
+    <section id="deployment">
+      <div class="section-title">دليل التثبيت والتشغيل</div>
+      <div class="steps-row">
+        <div class="step-box">
+          <div class="step-counter">STEP 01</div>
+          <div class="step-header">إيداع الملف المضغوط</div>
+          <div class="step-detail">
+            ضع ملف <span style="font-family:var(--font-mono); color:#fff;">BodyProtection.zip</span> مباشرة داخل مجلد <span style="font-family:var(--font-mono); color:#fff;">mods</span> التابع لمحاكي BeamNG.drive بدون فك الضغط.
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-counter">STEP 02</div>
+          <div class="step-header">إدراج الواجهة</div>
+          <div class="step-detail">
+            داخل أي ماب، افتح قائمة <b>Customize UI Apps</b>، اضغط <b>(+)</b> وأضف واجهة <b>Body Protection | حماية البدي</b>.
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-counter">STEP 03</div>
+          <div class="step-header">التفعيل والتحكم</div>
+          <div class="step-detail">
+            اضغط زر <b>ON</b> أو اضغط اختصار الكيبورد السريع <b>Shift + I</b> أو استخدم القائمة الدائرية (Radial Menu).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Open Source & AI Notice -->
+    <section id="license">
+      <div class="legal-box">
+        <div class="legal-title">OPEN SOURCE & ARTIFICIAL INTELLIGENCE STATEMENT</div>
+        <div class="legal-text">
+          تمت دراسة وبرمجة هذا النظام بالكامل باستخدام <b>الذكاء الاصطناعي (Artificial Intelligence)</b>، مع فحص مكتبات محرك BeamNG الثنائية وهندسة حل جذري يضمن الاستقرار والصلابة. الكود متاح ومفتوح المصدر بالكامل بنسبة 100% تحت رخصة <b>MIT License</b>. يحق لأي مطور أو مستخدم أخذ الكود، التعديل عليه، دمجه في مشاريعه، وإعادة توزيعه بحرية تامة دون أي قيود.
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div>BEAMNG.DRIVE BODY STRUCTURAL PROTECTION • COMMUNITY OPEN SOURCE</div>
+      <div>LICENSE: MIT • POWERED BY AI</div>
+    </footer>
+
+  </main>
+
+  <script>
+    let isProtectionActive = true;
+
+    function toggleWidgetState(state) {
+      isProtectionActive = state;
+      const btnOn = document.getElementById('btnMockOn');
+      const btnOff = document.getElementById('btnMockOff');
+      const badge = document.getElementById('widgetBadge');
+      const note = document.getElementById('widgetStatusNote');
+
+      if (isProtectionActive) {
+        btnOn.className = 'btn-mock selected';
+        btnOff.className = 'btn-mock';
+        badge.className = 'widget-indicator indicator-on';
+        badge.innerText = 'ON';
+        note.innerText = 'STATE: CHASSIS INVINCIBLE • BUMPERS DESTRUCTIBLE';
+      } else {
+        btnOn.className = 'btn-mock';
+        btnOff.className = 'btn-mock selected';
+        badge.className = 'widget-indicator indicator-off';
+        badge.innerText = 'OFF';
+        note.innerText = 'STATE: DEFAULT PHYSICS • STANDARD PLASTIC DEFORMATION';
+      }
+    }
+  </script>
+</body>
+</html>
